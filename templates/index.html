@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Chatbot</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Demo Chatbot</h1>
+        </header>
+        
+        <div class="chat-container">
+            <p>Bienvenido a mi página de demostración de Chatbot, la cual utiliza la API de OpenAI.</p>
+            <form method="POST" action="/">
+                <label for="comentario">Introduce tu mensaje:</label>
+                <textarea id="comentario" name="comentario" rows="4" placeholder="escriba su mensaje..."></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+            
+            {% if respuesta_chatgpt %}
+            <div class="response">
+                <h2>Respuesta:</h2>
+                <p>{{ respuesta_chatgpt }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
+
