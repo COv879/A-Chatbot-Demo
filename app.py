@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 import openai
 from dotenv import load_dotenv
 import os
@@ -7,10 +7,10 @@ import time
 
 load_dotenv()
 
-openai.api_key = os.getenv('OPENAI_API_KEY')
-
-
 app = Flask(__name__)
+
+openai.api_key = os.getenv('OPENAI_API_KEY')
+app.secret_key = os.getenv('SECRET_KEY')
 
 # Función para obtener respuesta de ChatGPT con reintentos si ocurre el error 429
 def obtener_respuesta_chatgpt(comentario):
@@ -38,17 +38,25 @@ def obtener_respuesta_chatgpt(comentario):
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    respuesta_chatgpt = None
+    if 'conversation' not in session:
+        session['conversation'] = []
+
+
     if request.method == 'POST':
         comentario = request.form.get('comentario')
 
         # Obtener respuesta de ChatGPT utilizando la función con reintentos
         respuesta_chatgpt = obtener_respuesta_chatgpt(comentario)
 
-        # Renderizar la página con la respuesta de ChatGPT
-        return render_template('index.html', comentario=comentario, respuesta_chatgpt=respuesta_chatgpt)
-    
-    return render_template('index.html', comentario=None, respuesta_chatgpt=None)
+        # Agregar el mensaje del usuario y la respuesta de ChatGPT a la conversación
+        session['conversation'].append({'role': 'user', 'message': comentario})
+        session['conversation'].append({'role': 'assistant', 'message': respuesta_chatgpt})
+        
+        # Asegurarse de que los datos persistan
+        session.modified = True
+
+    # Renderizar la página con la conversación
+    return render_template('index.html', conversation=session['conversation'])
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -27,11 +27,41 @@ header h1 {
     color: #007bff;
 }
 
-/* Form styles */
+/* Chat container */
 .chat-container {
-    text-align: center;
+    text-align: left;
 }
 
+/* Conversation styles */
+.conversation {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    text-align: left;
+}
+
+/* Message styles by role */
+.message.user {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.message.assistant {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+/* Form styles */
 form {
     margin-bottom: 20px;
 }
@@ -46,6 +76,7 @@ textarea {
     font-size: 16px;
 }
 
+/* Button styles */
 button {
     background-color: #007bff;
     color: white;
@@ -54,10 +85,12 @@ button {
     border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #004085;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Response styles */

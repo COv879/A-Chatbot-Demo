@@ -10,24 +10,28 @@
     <div class="container">
         <header>
             <h1>Demo Chatbot</h1>
-        </header>
-        
-        <div class="chat-container">
             <p>Bienvenido a mi página de demostración de Chatbot, la cual utiliza la API de OpenAI.</p>
+        </header>
+
+        <div class="chat-container">
+            <div class="conversation">
+                <!-- Ciclo para mostrar la conversación completa -->
+                {% for message in conversation %}
+                    <div class="message {{ message.role }}">
+                        <strong>{{ message.role.capitalize() }}:</strong>
+                        <p>{{ message.message }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+
             <form method="POST" action="/">
                 <label for="comentario">Introduce tu mensaje:</label>
-                <textarea id="comentario" name="comentario" rows="4" placeholder="escriba su mensaje..."></textarea>
+                <textarea id="comentario" name="comentario" rows="4" placeholder="Escriba su mensaje..."></textarea>
                 <button type="submit">Enviar</button>
             </form>
-            
-            {% if respuesta_chatgpt %}
-            <div class="response">
-                <h2>Respuesta:</h2>
-                <p>{{ respuesta_chatgpt }}</p>
-            </div>
-            {% endif %}
         </div>
     </div>
 </body>
 </html>
+
 
